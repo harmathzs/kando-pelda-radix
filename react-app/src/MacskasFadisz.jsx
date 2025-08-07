@@ -11,7 +11,7 @@ export default class MacskasFadisz extends React.Component {
 
     render() {
         return  <Box>
-                    <table style={{border: '1px solid black', borderCollapse: 'collapse', margin: '20px'}}>
+                    <table style={{border: '1px solid black', borderCollapse: 'collapse', margin: '20px', fontSize: '32px'}}>
                         <tbody>
                             {this.state.tableData.map((row, i) => 
                             <tr key={i}>
