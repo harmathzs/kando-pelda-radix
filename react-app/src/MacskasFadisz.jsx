@@ -11,7 +11,17 @@ export default class MacskasFadisz extends React.Component {
 
     render() {
         return  <Box>
-                    {this.state.tableData.map((row, i) => <p key={i}>{row}</p>)}
+                    <table style={{border: '1px solid black', borderCollapse: 'collapse', margin: '20px'}}>
+                        <tbody>
+                            {this.state.tableData.map((row, i) => 
+                            <tr key={i}>
+                                {[...row.trim()].map((kar, j)=>
+                                <td key={j} style={{border: '1px solid black', width: '80px', height: '80px'}}>
+                                    {kar}
+                                </td>)}
+                            </tr>)}
+                        </tbody>
+                    </table>
                 </Box>;
     }
 
@@ -22,9 +32,9 @@ export default class MacskasFadisz extends React.Component {
         for (let i = 0; i < text.length; i++) {
         if (rowStr.length >= 1 && text[i] >= "A" && text[i] <= "Z") {
             tableData.push(rowStr);
-            rowStr = text[i];
+            rowStr = text[i].toUpperCase();
         } else {
-            rowStr += text[i];
+            rowStr += text[i].toUpperCase();
         }
         }
         if (rowStr.length >= 1) {
