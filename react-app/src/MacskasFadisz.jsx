@@ -1,4 +1,5 @@
 import React from "react";
+import macskasFadiszImg from './assets/macskas-fadisz.jpg';
 import { Box, Container } from "@radix-ui/themes";
 export default class MacskasFadisz extends React.Component {
     constructor(props) {
@@ -22,6 +23,10 @@ export default class MacskasFadisz extends React.Component {
                             </tr>)}
                         </tbody>
                     </table>
+                
+                    <p>{this.state.tableData.length} szó.</p>
+                    <p><img src={macskasFadiszImg}></img></p>
+                    <p>&#x1F4A9;&#x1F4A9;&#x1F7E0;</p>
                 </Box>;
     }
 
