@@ -5,7 +5,6 @@ export default class MacskasFadisz extends React.Component {
         super(props);
 
         this.state = {
-            text: props.text,
             tableData: []
         }
     }
@@ -17,7 +16,7 @@ export default class MacskasFadisz extends React.Component {
     }
 
     populateTableData() {
-        const { text } = this.state;
+        const text = this.props.text || '';
         let tableData = [];
         let rowStr = "";
         for (let i = 0; i < text.length; i++) {
@@ -41,7 +40,7 @@ export default class MacskasFadisz extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         // Only recalculate if text changed
-        if (prevState.text !== this.state.text) {
+        if (prevProps.text !== this.props.text) {
             this.populateTableData();
         }
     }
