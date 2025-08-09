@@ -1,33 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { TabNav } from "@radix-ui/themes";
+import { Routes, Route, Link, useLocation } from "react-router-dom";
+import Home from './Home';
+import UiElements from './UiElements';
+import MyForm from './MyForm';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const location = useLocation();   // get location object
+  const pathname = location.pathname;  // current URL path
 
   return (
     <>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        {/* Navigation */}
+        <TabNav.Root>
+          <TabNav.Link asChild active={pathname === "/"}>
+            <Link to="/">Home</Link>
+          </TabNav.Link>
+          <TabNav.Link asChild active={pathname === "/uielements"}>
+            <Link to="/uielements">UI Elements</Link>
+          </TabNav.Link>
+          <TabNav.Link asChild active={pathname === "/myform"}>
+            <Link to="/myform">My Form</Link>
+          </TabNav.Link>
+        </TabNav.Root>
+
+        {/* Routes */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/uielements" element={<UiElements />} />
+          <Route path="/myform" element={<MyForm />} />
+        </Routes>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
