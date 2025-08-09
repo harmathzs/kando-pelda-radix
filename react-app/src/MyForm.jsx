@@ -3,6 +3,11 @@ import { Flex, Box, Dialog, Button, Checkbox, Text, TextField, CheckboxCards, Ra
 import { FilePlusIcon } from "@radix-ui/react-icons";
 
 export default class MyForm extends React.Component {
+    state = {
+        agreedToTerms: false,
+        agreedToConditions: false,
+    }
+
     handleFormSubmit = e => {
         e.preventDefault();
         const formData = new FormData(e.target);
@@ -113,14 +118,16 @@ export default class MyForm extends React.Component {
                                 <Flex mt="5" />
 
                                 <Flex align="center" gap="3">
-                                    <CheckboxCards.Root defaultValue={["0"]} size="1">
-                                        <CheckboxCards.Item value="1">Agree to Terms</CheckboxCards.Item>
+                                    <CheckboxCards.Root defaultValue={[]} size="1" onValueChange={values=>this.setState({
+                                        agreedToTerms: values.includes('terms'),
+                                        agreedToConditions: values.includes('conditions'),
+                                    })}>
+                                        <CheckboxCards.Item value="terms">Agree to Terms</CheckboxCards.Item>
+                                        <CheckboxCards.Item value="conditions">Agree to Conditions</CheckboxCards.Item>
                                     </CheckboxCards.Root>
-
-                                    <CheckboxCards.Root defaultValue={["0"]} size="1">
-                                        <CheckboxCards.Item value="1">Agree to Conditions</CheckboxCards.Item>
-                                    </CheckboxCards.Root>
-                                </Flex>                                
+                                </Flex>
+                                <input type='hidden' id='hiddenAgreedToTerms' name='hiddenAgreedToTerms' value={this.state.agreedToTerms} />        
+                                <input type='hidden' id='hiddenAgreedToConditions' name='hiddenAgreedToConditions' value={this.state.agreedToConditions} />                          
 
                                 <Flex gap="3" mt="4" justify="end">
                                     <Dialog.Close>
@@ -129,7 +136,7 @@ export default class MyForm extends React.Component {
                                         </Button>
                                     </Dialog.Close>
                                     {/*<Dialog.Close>*/}
-                                        <Button type='submit'>Submit</Button>
+                                        <Button type='submit' disabled={!this.state.agreedToTerms || !this.state.agreedToConditions}>Submit</Button>
                                     {/*</Dialog.Close>*/}
                                 </Flex>
                             </form>
