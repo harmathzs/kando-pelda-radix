@@ -34,7 +34,16 @@ export default class SpecialForms extends React.Component {
             console.log("Type (MIME):", file.type);
             console.log("Last Modified:", new Date(file.lastModified));
 
-            this.setState({selectedFile: file});
+            const reader = new FileReader();
+            reader.readAsText(file);
+
+            // For text files
+            reader.onload = (event) => {
+                console.log("File content:", event.target.result);
+                this.setState({selectedFile: file, selectedFileContent: event.target.result});
+            };
+
+            
         }
     }
 
@@ -112,6 +121,7 @@ export default class SpecialForms extends React.Component {
                 {this.state.selectedFile ? <p>Size: {this.state.selectedFile.size}</p> : <p></p>}
                 {this.state.selectedFile ? <p>Type: {this.state.selectedFile.type}</p> : <p></p>}
                 {this.state.selectedFile ? <p>Last modified: {new Date(this.state.selectedFile.lastModified).toISOString()}</p> : <p></p>}
+                {this.state.selectedFile ? <p>Content: {this.state.selectedFileContent}</p> : <p></p>}
             </Box>
         </Flex>
     }
