@@ -4,7 +4,6 @@ import { Flex, Box, Text, Button } from '@radix-ui/themes';
 export default class SpecialForms extends React.Component {
     state = {
         showAlertDialog: false,
-        formDataObj: '',
     }
 
     handleHtmlForm = e => {
@@ -26,7 +25,17 @@ export default class SpecialForms extends React.Component {
         console.log('handleFileChosen e', e);
 
         const filename = e.target.value;
-        console.log('filename', filename);
+        console.log('filename', filename); // C:\fakepath\almafa.txt
+
+        const file = e.target.files[0];
+        if (file) {
+            console.log("Name:", file.name);
+            console.log("Size (bytes):", file.size);
+            console.log("Type (MIME):", file.type);
+            console.log("Last Modified:", new Date(file.lastModified));
+
+            this.setState({selectedFile: file});
+        }
     }
 
     render() {
@@ -97,6 +106,13 @@ export default class SpecialForms extends React.Component {
                     </label>
                 </Box>
             </form>
+
+            <Box>
+                {this.state.selectedFile ? <p>Name: {this.state.selectedFile.name}</p> : <p></p>}
+                {this.state.selectedFile ? <p>Size: {this.state.selectedFile.size}</p> : <p></p>}
+                {this.state.selectedFile ? <p>Type: {this.state.selectedFile.type}</p> : <p></p>}
+                {this.state.selectedFile ? <p>Last modified: {new Date(this.state.selectedFile.lastModified).toISOString()}</p> : <p></p>}
+            </Box>
         </Flex>
     }
 }
