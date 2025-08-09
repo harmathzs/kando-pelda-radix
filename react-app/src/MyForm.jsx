@@ -4,8 +4,12 @@ import { FilePlusIcon } from "@radix-ui/react-icons";
 
 export default class MyForm extends React.Component {
     handleFormSubmit = e => {
-        console.log('handleFormSubmit e', e);
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const values = Object.fromEntries(formData.entries());
+        console.log(values);
     }
+
 
     render() {
         return <Box style={{padding: '15px'}}>
@@ -20,16 +24,18 @@ export default class MyForm extends React.Component {
                                 Register new user.
                             </Dialog.Description>
 
-                            <form method='POST'>
+                            <form method='POST' onSubmit={this.handleFormSubmit}>
                                 <Flex direction="column" gap="3">
                                     <label>
                                         <Text as="div" size="2" mb="1" weight="bold">
                                             Name
                                         </Text>
                                         <TextField.Root
+                                            id='inputName'
                                             name='inputName'
                                             defaultValue="Freja Johnsen"
                                             placeholder="Enter your full name"
+                                            required={true}
                                         />
                                     </label>
                                     <label>
@@ -37,16 +43,18 @@ export default class MyForm extends React.Component {
                                             Email
                                         </Text>
                                         <TextField.Root
+                                            id='inputEmail'
                                             name='inputEmail'
                                             defaultValue="freja@example.com"
                                             placeholder="Enter your email"
+                                            required={true}
                                         />
                                     </label>
                                 </Flex>
 
-                                <Text as="label" size="2">
+                                <Text as="label" htmlFor='checkboxMale' size="2">
                                     <Flex as="span" gap="2" justify="end">
-                                        <Checkbox name='checkboxMale' />
+                                        <Checkbox id='checkboxMale' name='checkboxMale' />
                                         Male
                                     </Flex>
                                 </Text>
@@ -75,8 +83,8 @@ export default class MyForm extends React.Component {
                                 </Flex>
 
                                 <Flex gap="3" justify="end">
-                                    <Text as='label'>Role: </Text>
-                                    <Select.Root defaultValue="dev">
+                                    <Text as='label' htmlFor='selectRole'>Role: </Text>
+                                    <Select.Root id='selectRole' name='selectRole' defaultValue="dev">
                                         <Select.Trigger radius="full" />
                                         <Select.Content>
                                             <Select.Item value="dev">Developer</Select.Item>
@@ -87,26 +95,22 @@ export default class MyForm extends React.Component {
                                 </Flex>
 
                                 <Flex direction="column" gap="4" maxWidth="300px">
-                                    <Text as='label'>English proficiency: </Text>
-                                    <Slider defaultValue={[25]} size="1" name='sliderEnglish' />
-                                    <Text as='label'>Salary expectation range: </Text>
-                                    <Slider min={0} max={12000} defaultValue={[1200, 4800]} size="1" name='sliderSalaryRange' />
+                                    <Text as='label' htmlFor='sliderEnglish'>English proficiency: </Text>
+                                    <Slider id='sliderEnglish' defaultValue={[25]} size="1" name='sliderEnglish' />
+                                    <Text as='label' htmlFor='sliderSalaryRange'>Salary expectation range: </Text>
+                                    <Slider id='sliderSalaryRange' min={0} max={12000} defaultValue={[1200, 4800]} size="1" name='sliderSalaryRange' />
                                 </Flex>
 
                                 <Flex gap="3" justify="end">
-                                    <Text as='label'>Like jokes</Text>
-                                    <Switch color="orange" name='switchLikeJokes' defaultChecked />
+                                    <Text as='label' htmlFor='switchLikeJokes'>Like jokes</Text>
+                                    <Switch color="orange" id='switchLikeJokes' name='switchLikeJokes' defaultChecked />
                                 </Flex>
 
                                 <Flex gap="3">
-                                    <TextArea style={{width: '600px'}} resize='both' name='textareaComments' placeholder='More comments...' />
+                                    <TextArea style={{width: '600px'}} resize='both' id='textareaComments' name='textareaComments' placeholder='More comments...' />
                                 </Flex>
 
-                                <Flex gap="3">
-                                    <Box>
-                                        <p>&nbsp;</p>
-                                    </Box>
-                                </Flex>
+                                <Flex mt="5" />
 
                                 <Flex align="center" gap="3">
                                     <CheckboxCards.Root defaultValue={["0"]} size="1">
@@ -124,9 +128,9 @@ export default class MyForm extends React.Component {
                                             Cancel
                                         </Button>
                                     </Dialog.Close>
-                                    <Dialog.Close>
-                                        <Button onClick={this.handleFormSubmit}>Submit</Button>
-                                    </Dialog.Close>
+                                    {/*<Dialog.Close>*/}
+                                        <Button type='submit'>Submit</Button>
+                                    {/*</Dialog.Close>*/}
                                 </Flex>
                             </form>
                             
