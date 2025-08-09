@@ -8,6 +8,9 @@ export default class MyForm extends React.Component {
         agreedToTerms: false,
         agreedToConditions: false,
         package: '',
+        englishValue: 25,
+        salaryLow: 1200,
+        salaryHigh: 4800,
     }
 
     handleDialogOpenChange = open => this.setState({dialogOpen: open});
@@ -31,10 +34,11 @@ export default class MyForm extends React.Component {
 
                         <Dialog.Content maxWidth="1024px">
                             <Dialog.Title>New user</Dialog.Title>
+                            {/*
                             <Dialog.Description size="2" mb="4">
                                 Register new user.
                             </Dialog.Description>
-
+                            */}
                             <form method='POST' onSubmit={this.handleFormSubmit}>
                                 <Flex direction="column" gap="3">
                                     <label>
@@ -110,10 +114,15 @@ export default class MyForm extends React.Component {
 
                                 <Flex direction="column" gap="4" maxWidth="300px">
                                     <Text as='label' htmlFor='sliderEnglish'>English proficiency: </Text>
-                                    <Slider id='sliderEnglish' defaultValue={[25]} size="1" name='sliderEnglish' />
+                                    <Slider id='sliderEnglish' defaultValue={[this.state.englishValue]} size="1" name='sliderEnglish' onValueChange={value=>this.setState({englishValue: value})} />
+                                    <Text as='span'>{this.state.englishValue}</Text>
                                     <Text as='label' htmlFor='sliderSalaryRange'>Salary expectation range: </Text>
-                                    <Slider id='sliderSalaryRange' min={0} max={12000} defaultValue={[1200, 4800]} size="1" name='sliderSalaryRange' />
+                                    <Slider id='sliderSalaryRange' min={0} max={12000} defaultValue={[this.state.salaryLow, this.state.salaryHigh]} size="1" name='sliderSalaryRange'
+                                    onValueChange={values=>this.setState({salaryLow: values[0], salaryHigh: values[1]})} />
+                                    <Text as='span'>{this.state.salaryLow} - {this.state.salaryHigh}</Text>
                                 </Flex>
+                                <input type='hidden' id='hiddenSalaryLow' name='hiddenSalaryLow' value={this.state.salaryLow} />
+                                <input type='hidden' id='hiddenSalaryHigh' name='hiddenSalaryHigh' value={this.state.salaryHigh} />
 
                                 <Flex gap="3" justify="end">
                                     <Text as='label' htmlFor='switchLikeJokes'>Like jokes</Text>
