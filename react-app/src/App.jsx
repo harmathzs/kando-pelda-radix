@@ -12,7 +12,7 @@ function App() {
 
   return (
     <>
-      <div>
+      <div style={{maxWidth: '1024px', margin: '0 auto', overflowX: 'hidden'}}>
         {/* Navigation */}
         <TabNav.Root>
           <TabNav.Link asChild active={pathname === "/"}>
