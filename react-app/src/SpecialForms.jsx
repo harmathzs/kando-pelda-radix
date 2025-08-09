@@ -17,7 +17,16 @@ export default class SpecialForms extends React.Component {
     }
 
     handleFileForm = e => {
+        e.preventDefault();
+        // TODO
+    }
 
+    handleFileChosen = e => {
+        e.preventDefault();
+        console.log('handleFileChosen e', e);
+
+        const filename = e.target.value;
+        console.log('filename', filename);
     }
 
     render() {
@@ -79,8 +88,14 @@ export default class SpecialForms extends React.Component {
                 </Box>
             </form>
 
-            <form method="POST" onSubmit={this.handleFileForm}>
-
+            <h4>File uploader form</h4>
+            <form method="POST" onSubmit={this.handleFileForm} encType="multipart/form-data">
+                <Box style={{textAlign: 'left'}}>
+                    <label htmlFor="cmpFileupload">
+                        <Text as="label">Upload file: </Text>
+                        <input type="file" id="cmpFileupload" name="cmpFileupload" onChange={this.handleFileChosen} />
+                    </label>
+                </Box>
             </form>
         </Flex>
     }
