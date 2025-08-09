@@ -11,6 +11,8 @@ export default class MyForm extends React.Component {
         englishValue: 25,
         salaryLow: 1200,
         salaryHigh: 4800,
+
+        formDataObjJson: '""'
     }
 
     handleDialogOpenChange = open => this.setState({dialogOpen: open});
@@ -21,12 +23,13 @@ export default class MyForm extends React.Component {
         const values = Object.fromEntries(formData.entries());
         console.log(values);
 
-        this.setState({dialogOpen: false});
+        this.setState({dialogOpen: false, formDataObjJson: JSON.stringify(values)});
     }
 
 
     render() {
         return <Box style={{padding: '15px'}}>
+                    {this.state.formDataObjJson!='""' ? <p>{this.state.formDataObjJson}</p> : <p></p>}
                     <Dialog.Root open={this.state.dialogOpen} onOpenChange={this.handleDialogOpenChange}>
                         <Dialog.Trigger asChild>
                             <Button><FilePlusIcon />Register new user</Button>
