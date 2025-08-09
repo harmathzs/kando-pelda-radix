@@ -1,6 +1,170 @@
 import React from 'react';
+import { Flex, Box, Dialog, Button, Checkbox, Text, TextField, CheckboxCards, RadioCards, Select, TextArea, Slider, Switch } from "@radix-ui/themes";
+import { FilePlusIcon } from "@radix-ui/react-icons";
+
 export default class MyForm extends React.Component {
+    state = {
+        dialogOpen: false,
+        agreedToTerms: false,
+        agreedToConditions: false,
+        package: '',
+        englishValue: 25,
+        salaryLow: 1200,
+        salaryHigh: 4800,
+
+        formDataObjJson: '""'
+    }
+
+    handleDialogOpenChange = open => this.setState({dialogOpen: open});
+
+    handleFormSubmit = e => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const values = Object.fromEntries(formData.entries());
+        console.log(values);
+
+        this.setState({dialogOpen: false, formDataObjJson: JSON.stringify(values)});
+    }
+
+
     render() {
-        return <h2>MyForm</h2>;
+        return <Box style={{padding: '15px'}}>
+                    {this.state.formDataObjJson!='""' ? <p>{this.state.formDataObjJson}</p> : <p></p>}
+                    <Dialog.Root open={this.state.dialogOpen} onOpenChange={this.handleDialogOpenChange}>
+                        <Dialog.Trigger asChild>
+                            <Button><FilePlusIcon />Register new user</Button>
+                        </Dialog.Trigger>
+
+                        <Dialog.Content maxWidth="1024px">
+                            <Dialog.Title>New user</Dialog.Title>
+                            {/*
+                            <Dialog.Description size="2" mb="4">
+                                Register new user.
+                            </Dialog.Description>
+                            */}
+                            <form method='POST' onSubmit={this.handleFormSubmit}>
+                                <Flex direction="column" gap="3">
+                                    <label>
+                                        <Text as="div" size="2" mb="1" weight="bold">
+                                            Name
+                                        </Text>
+                                        <TextField.Root
+                                            id='inputName'
+                                            name='inputName'
+                                            defaultValue="Freja Johnsen"
+                                            placeholder="Enter your full name"
+                                            required={true}
+                                        />
+                                    </label>
+                                    <label>
+                                        <Text as="div" size="2" mb="1" weight="bold">
+                                            Email
+                                        </Text>
+                                        <TextField.Root
+                                            id='inputEmail'
+                                            name='inputEmail'
+                                            defaultValue="freja@example.com"
+                                            placeholder="Enter your email"
+                                            required={true}
+                                        />
+                                    </label>
+                                </Flex>
+
+                                <Text as="label" htmlFor='checkboxMale' size="2">
+                                    <Flex as="span" gap="2" justify="end">
+                                        <Checkbox id='checkboxMale' name='checkboxMale' />
+                                        Male
+                                    </Flex>
+                                </Text>
+
+                                <Flex align="center" gap="3">
+                                    <RadioCards.Root defaultValue="free" columns={{ initial: "free", sm: "3" }} onValueChange={value=>this.setState({
+                                        package: value
+                                    })}>
+                                        <RadioCards.Item value="free">
+                                            <Flex direction="column" width="100%">
+                                                <Text weight="bold">Free</Text>
+                                                <Text>Free user</Text>
+                                            </Flex>
+                                        </RadioCards.Item>
+                                        <RadioCards.Item value="cheap">
+                                            <Flex direction="column" width="100%">
+                                                <Text weight="bold">Cheap</Text>
+                                                <Text>Cheap package</Text>
+                                            </Flex>
+                                        </RadioCards.Item>
+                                        <RadioCards.Item value="expensive">
+                                            <Flex direction="column" width="100%">
+                                                <Text weight="bold">Expensive</Text>
+                                                <Text>Expensive package</Text>
+                                            </Flex>
+                                        </RadioCards.Item>
+                                    </RadioCards.Root>
+                                </Flex>
+                                <input type='hidden' id='hiddenPackage' name='hiddenPackage' value={this.state.package} />
+
+                                <Flex gap="3" justify="end">
+                                    <Text as='label' htmlFor='selectRole'>Role: </Text>
+                                    <Select.Root id='selectRole' name='selectRole' defaultValue="dev">
+                                        <Select.Trigger radius="full" />
+                                        <Select.Content>
+                                            <Select.Item value="dev">Developer</Select.Item>
+                                            <Select.Item value="salesrep">Sales rep</Select.Item>
+                                            <Select.Item value="am">Account manager</Select.Item>
+                                        </Select.Content>
+                                    </Select.Root>
+                                </Flex>
+
+                                <Flex direction="column" gap="4" maxWidth="300px">
+                                    <Text as='label' htmlFor='sliderEnglish'>English proficiency: </Text>
+                                    <Slider id='sliderEnglish' defaultValue={[this.state.englishValue]} size="1" name='sliderEnglish' onValueChange={value=>this.setState({englishValue: value})} />
+                                    <Text as='span'>{this.state.englishValue}</Text>
+                                    <Text as='label' htmlFor='sliderSalaryRange'>Salary expectation range: </Text>
+                                    <Slider id='sliderSalaryRange' min={0} max={12000} defaultValue={[this.state.salaryLow, this.state.salaryHigh]} size="1" name='sliderSalaryRange'
+                                    onValueChange={values=>this.setState({salaryLow: values[0], salaryHigh: values[1]})} />
+                                    <Text as='span'>{this.state.salaryLow} - {this.state.salaryHigh}</Text>
+                                </Flex>
+                                <input type='hidden' id='hiddenSalaryLow' name='hiddenSalaryLow' value={this.state.salaryLow} />
+                                <input type='hidden' id='hiddenSalaryHigh' name='hiddenSalaryHigh' value={this.state.salaryHigh} />
+
+                                <Flex gap="3" justify="end">
+                                    <Text as='label' htmlFor='switchLikeJokes'>Like jokes</Text>
+                                    <Switch color="orange" id='switchLikeJokes' name='switchLikeJokes' defaultChecked />
+                                </Flex>
+
+                                <Flex gap="3">
+                                    <TextArea style={{width: '600px'}} resize='both' id='textareaComments' name='textareaComments' placeholder='More comments...' />
+                                </Flex>
+
+                                <Flex mt="5" />
+
+                                <Flex align="center" gap="3">
+                                    <CheckboxCards.Root defaultValue={[]} size="1" onValueChange={values=>this.setState({
+                                        agreedToTerms: values.includes('terms'),
+                                        agreedToConditions: values.includes('conditions'),
+                                    })}>
+                                        <CheckboxCards.Item value="terms">Agree to Terms</CheckboxCards.Item>
+                                        <CheckboxCards.Item value="conditions">Agree to Conditions</CheckboxCards.Item>
+                                    </CheckboxCards.Root>
+                                </Flex>
+                                <input type='hidden' id='hiddenAgreedToTerms' name='hiddenAgreedToTerms' value={this.state.agreedToTerms} />        
+                                <input type='hidden' id='hiddenAgreedToConditions' name='hiddenAgreedToConditions' value={this.state.agreedToConditions} />                          
+
+                                <Flex gap="3" mt="4" justify="end">
+                                    <Dialog.Close>
+                                        <Button variant="soft" color="gray">
+                                            Cancel
+                                        </Button>
+                                    </Dialog.Close>
+                                    {/*<Dialog.Close>*/}
+                                        <Button type='submit' disabled={!this.state.agreedToTerms || !this.state.agreedToConditions}>Submit</Button>
+                                    {/*</Dialog.Close>*/}
+                                </Flex>
+                            </form>
+                            
+                        </Dialog.Content>
+                    </Dialog.Root>
+
+        </Box>
     }
 }
