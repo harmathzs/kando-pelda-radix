@@ -5,6 +5,7 @@ import Home from './Home';
 import UiElements from './UiElements';
 import Params from './Params';
 import MyForm from './MyForm';
+import SpecialForms from './SpecialForms';
 
 function App() {
   const location = useLocation();   // get location object
@@ -27,6 +28,9 @@ function App() {
           <TabNav.Link asChild active={pathname === "/myform"}>
             <Link to="/myform">My Form</Link>
           </TabNav.Link>
+          <TabNav.Link asChild active={pathname === "/specialforms"}>
+            <Link to="/specialforms">Special Forms</Link>
+          </TabNav.Link>
         </TabNav.Root>
 
         {/* Routes */}
@@ -35,6 +39,7 @@ function App() {
           <Route path="/uielements" element={<UiElements />} />
           <Route path="/params" element={<Params />} />
           <Route path="/myform" element={<MyForm />} />
+          <Route path="/specialforms" element={<SpecialForms />} />
         </Routes>
       </div>
     </>
