@@ -4,22 +4,28 @@ import { FilePlusIcon } from "@radix-ui/react-icons";
 
 export default class MyForm extends React.Component {
     state = {
+        dialogOpen: false,
         agreedToTerms: false,
         agreedToConditions: false,
+        package: '',
     }
+
+    handleDialogOpenChange = open => this.setState({dialogOpen: open});
 
     handleFormSubmit = e => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const values = Object.fromEntries(formData.entries());
         console.log(values);
+
+        this.setState({dialogOpen: false});
     }
 
 
     render() {
         return <Box style={{padding: '15px'}}>
-                    <Dialog.Root>
-                        <Dialog.Trigger>
+                    <Dialog.Root open={this.state.dialogOpen} onOpenChange={this.handleDialogOpenChange}>
+                        <Dialog.Trigger asChild>
                             <Button><FilePlusIcon />Register new user</Button>
                         </Dialog.Trigger>
 
@@ -65,20 +71,22 @@ export default class MyForm extends React.Component {
                                 </Text>
 
                                 <Flex align="center" gap="3">
-                                    <RadioCards.Root defaultValue="1" columns={{ initial: "1", sm: "3" }}>
-                                        <RadioCards.Item value="1">
+                                    <RadioCards.Root defaultValue="free" columns={{ initial: "free", sm: "3" }} onValueChange={value=>this.setState({
+                                        package: value
+                                    })}>
+                                        <RadioCards.Item value="free">
                                             <Flex direction="column" width="100%">
                                                 <Text weight="bold">Free</Text>
                                                 <Text>Free user</Text>
                                             </Flex>
                                         </RadioCards.Item>
-                                        <RadioCards.Item value="2">
+                                        <RadioCards.Item value="cheap">
                                             <Flex direction="column" width="100%">
                                                 <Text weight="bold">Cheap</Text>
                                                 <Text>Cheap package</Text>
                                             </Flex>
                                         </RadioCards.Item>
-                                        <RadioCards.Item value="3">
+                                        <RadioCards.Item value="expensive">
                                             <Flex direction="column" width="100%">
                                                 <Text weight="bold">Expensive</Text>
                                                 <Text>Expensive package</Text>
@@ -86,6 +94,7 @@ export default class MyForm extends React.Component {
                                         </RadioCards.Item>
                                     </RadioCards.Root>
                                 </Flex>
+                                <input type='hidden' id='hiddenPackage' name='hiddenPackage' value={this.state.package} />
 
                                 <Flex gap="3" justify="end">
                                     <Text as='label' htmlFor='selectRole'>Role: </Text>
