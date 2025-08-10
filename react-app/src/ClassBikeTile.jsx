@@ -8,7 +8,7 @@ export default class ClassBikeTile extends React.Component {
                     <Card size="2">
                         <Inset clip="padding-box" side="top" pb="current">
                             <img
-                                src={TrekkingImg}
+                                src={this.props.type=='trekking' ? TrekkingImg : MtbImg}
                                 alt="Trekking"
                                 style={{
                                     display: "block",

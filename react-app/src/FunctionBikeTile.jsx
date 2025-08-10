@@ -1,11 +1,11 @@
 import { Flex, Box, Card, Text, Strong, Inset } from "@radix-ui/themes";
 import TrekkingImg from './assets/trekking.avif';
 import MtbImg from './assets/mtb.webp';
-const FunctionBikeTile = () => <Box maxWidth="240px">
+const FunctionBikeTile = ({type}) => <Box maxWidth="240px">
                                     <Card size="2">
                                         <Inset clip="padding-box" side="top" pb="current">
                                             <img
-                                                src={MtbImg}
+                                                src={type=='trekking' ? TrekkingImg : MtbImg}
                                                 alt="Bold typography"
                                                 style={{
                                                     display: "block",
