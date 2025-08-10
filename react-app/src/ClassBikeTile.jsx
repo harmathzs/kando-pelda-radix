@@ -1,13 +1,15 @@
 import React from "react";
 import { Flex, Box, Card, Text, Strong, Inset } from "@radix-ui/themes";
+import TrekkingImg from './assets/trekking.avif';
+import MtbImg from './assets/mtb.webp';
 export default class ClassBikeTile extends React.Component {
     render() {
         return <Box maxWidth="240px">
                     <Card size="2">
                         <Inset clip="padding-box" side="top" pb="current">
                             <img
-                                src="https://images.unsplash.com/photo-1617050318658-a9a3175e34cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
-                                alt="Bold typography"
+                                src={TrekkingImg}
+                                alt="Trekking"
                                 style={{
                                     display: "block",
                                     objectFit: "cover",
@@ -18,8 +20,7 @@ export default class ClassBikeTile extends React.Component {
                             />
                         </Inset>
                         <Text as="p" size="3">
-                            <Strong>Typography</Strong> is the art and technique of arranging type to
-                            make written language legible, readable and appealing when displayed.
+                            <Strong>Trekking</Strong> - price: $1899
                         </Text>
                     </Card>
                 </Box>
