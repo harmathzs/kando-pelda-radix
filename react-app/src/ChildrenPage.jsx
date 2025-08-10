@@ -5,9 +5,9 @@ export default class ChildrenPage extends React.Component {
     render() {
         return <div>
             <Parent>
-                <Child />
-                <Child />
-                <Child />
+                <Child name="John" />
+                <Child name="Dana" />
+                <Child name="Tim" />
             </Parent>
         </div>
     }
